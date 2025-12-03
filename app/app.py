@@ -105,7 +105,10 @@ with st.sidebar:
     st.header("⚙️ 설정")
     
     # API 키 입력 (비밀번호처럼 가려서 입력)
-    api_key = st.text_input("Google Gemini API Key", type="password", help="Google AI Studio에서 발급받은 키를 입력하세요.")
+    api_key = st.text_input(
+        "Google Gemini API Key", 
+        type="password", 
+        help="Google AI Studio에서 발급받은 키를 입력하세요.")
     
     st.divider()
     
@@ -177,12 +180,17 @@ with col2:
             cat_index = 5 # 기타
             
         input_category = st.selectbox("카테고리", options, index=cat_index)
-        input_price = st.number_input(f"금액 ({currency})", min_value=0.0, format="%.2f", value=st.session_state.form_price)
+        input_price = st.number_input(
+            f"금액 ({currency})", 
+            min_value=0.0, 
+            format="%.2f", 
+            value=st.session_state.form_price)
         
         submitted = st.form_submit_button("💾 지출 등록하기")
         
         if submitted:
             price_krw = input_price * current_rate
+            # [변경] session_state 대신 DB 저장 함수 호출
             record = {
                 "날짜": input_date.strftime("%Y-%m-%d"),
                 "가게명": input_store,
