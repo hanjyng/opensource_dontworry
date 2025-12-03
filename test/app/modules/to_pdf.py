@@ -22,13 +22,10 @@ def create_pdf(df):
     font_path = os.path.join(app_dir, "fonts", "NanumGothic", "NanumGothic-Regular.ttf")
     
     # 디버깅용 출력 (터미널에서 확인 가능)
-    print(f"🔎 폰트 찾는 경로: {font_path}")
-    print(f"font_path: {font_path}")
+    print(f"🔎 폰트 찾는 경로 font_path: {font_path}")
     
     # 폰트 파일이 있는지 확인
     if os.path.exists(font_path):
-        # fpdf2 최신 버전에서는 fname 인자 사용 권장
-        # pdf.add_font("NanumGothic", "", font_path)
         pdf.add_font(family="NanumGothic", fname=font_path)
         pdf.set_font("NanumGothic", size=10)
     else:
@@ -103,9 +100,6 @@ def create_pdf(df):
 
 # 이 파일을 직접 실행했을 때만 초기화 테스트 진행
 if __name__ == "__main__":
-    # create_pdf()
-    # print(f"create_pdf() {create_pdf}")
-    
     # 테스트용 더미 데이터
     import pandas as pd
     data = {'날짜': ['2024-05-01'], '가게명': ['테스트식당'], '금액': [10000]}

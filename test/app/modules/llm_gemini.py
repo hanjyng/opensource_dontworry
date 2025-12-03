@@ -15,11 +15,12 @@ def analyze_receipt(image, api_key):
         Analyze this receipt image and extract the following information in JSON format:
         1. date (format: YYYY-MM-DD, if not found use today)
         2. store_name (name of the shop or restaurant)
-        3. price (total amount, number only, no currency symbol)
-        4. category (Choose one strictly from: 식비, 쇼핑, 관광, 교통, 숙박, 기타)
+        3. address (full address found on receipt, if not found return empty string)
+        4. price (total amount, number only, no currency symbol)
+        5. category (Choose one strictly from: 식비, 쇼핑, 관광, 교통, 숙박, 기타)
 
         Return ONLY the JSON string. Do not use Markdown code blocks.
-        Example: {"date": "2024-01-01", "store_name": "Starbucks", "price": 15.50, "category": "식비"}
+        Example: {"date": "2024-01-01", "store_name": "Starbucks", "address": "123 Main St, Seoul", "price": 15.50, "category": "식비"}
         """
         
         # 이미지와 프롬프트를 함께 전송

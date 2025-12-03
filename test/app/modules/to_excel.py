@@ -6,6 +6,9 @@ import io
 # 함수: 엑셀 다운로드용 바이너리 생성
 # ==========================================
 def to_excel(df):
+    """
+    엑셀 다운로드용 바이너리 생성 
+    """
     output = io.BytesIO()
     # xlsxwriter 엔진 사용
     with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
