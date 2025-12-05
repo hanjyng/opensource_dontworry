@@ -22,6 +22,9 @@ def init_db():
                 date TEXT,
                 store_name TEXT,
                 address TEXT,
+                search_address TEXT,  -- [추가] 검색용 주소 컬럼
+                gemini_lat REAL,    -- [추가] Gemini가 추정한 위도
+                gemini_lon REAL,    -- [추가] Gemini가 추정한 경도
                 category TEXT,
                 price_foreign REAL,
                 currency TEXT,
@@ -47,15 +50,18 @@ def init_db():
             )
         ''')
         
-        # [마이그레이션] 기존 DB에 컬럼이 없을 경우 추가
-        try:
-            c.execute("ALTER TABLE expenses ADD COLUMN address TEXT")
+        # [마이그레이션] 컬럼 추가 시도
+        try: c.execute("ALTER TABLE expenses ADD COLUMN address TEXT")
         except: pass
-        try:
-            c.execute("ALTER TABLE expenses ADD COLUMN linked_memory_id INTEGER")
+        try: c.execute("ALTER TABLE expenses ADD COLUMN search_address TEXT")
         except: pass
-        try:
-            c.execute("ALTER TABLE memories ADD COLUMN linked_expense_id INTEGER")
+        try: c.execute("ALTER TABLE expenses ADD COLUMN gemini_lat REAL")
+        except: pass
+        try: c.execute("ALTER TABLE expenses ADD COLUMN gemini_lon REAL")
+        except: pass
+        try: c.execute("ALTER TABLE expenses ADD COLUMN linked_memory_id INTEGER")
+        except: pass
+        try: c.execute("ALTER TABLE memories ADD COLUMN linked_expense_id INTEGER")
         except: pass
         
         # commit은 with 문을 빠져나갈 때 자동으로 수행되지만, 명시적으로 적어도 무방합니다.
@@ -108,14 +114,14 @@ def update_linkage(expense_id, memory_id):
 # ==========================================
 # 지출 관리(tab)에서 사용할 함수들 
 # ==========================================
-def save_expense(date, store, address, category, price_f, currency, price_k, rate, linked_mem_id):
+def save_expense(date, store, address, search_address, g_lat, g_lon, category, price_f, currency, price_k, rate, linked_mem_id):
     """지출 내역을 DB에 저장합니다."""
     with sqlite3.connect(DB_NAME) as conn:
         c = conn.cursor()
         c.execute('''
-            INSERT INTO expenses (date, store_name, address, category, price_foreign, currency, price_krw, exchange_rate, linked_memory_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (date, store, address, category, price_f, currency, price_k, rate, linked_mem_id))
+            INSERT INTO expenses (date, store_name, address, search_address, gemini_lat, gemini_lon, category, price_foreign, currency, price_krw, exchange_rate, linked_memory_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (date, store, address, search_address, g_lat, g_lon, category, price_f, currency, price_k, rate, linked_mem_id))
         new_id = c.lastrowid
         conn.commit()
         
@@ -130,15 +136,17 @@ def load_expenses():
         df = pd.read_sql("SELECT * FROM expenses ORDER BY date DESC", conn)
     return df
 
-def update_expense(expense_id, date, store, address, category, price_f, currency, price_k, rate, linked_mem_id=None):
+def update_expense(expense_id, date, store, address, search_address, g_lat, g_lon, category, price_f, currency, price_k, rate, linked_mem_id=None):
     "지출 데이터 갱신 함수"
     with sqlite3.connect(DB_NAME) as conn:
         c = conn.cursor()
         c.execute('''
             UPDATE expenses 
-            SET date=?, store_name=?, address=?, category=?, price_foreign=?, currency=?, price_krw=?, exchange_rate=?
+            SET date=?, store_name=?, address=?, search_address=?, 
+            gemini_lat=?, gemini_lon=?, category=?, price_foreign=?, 
+            currency=?, price_krw=?, exchange_rate=?, linked_memory_id=?
             WHERE id=?
-        ''', (date, store, category, address, price_f, currency, price_k, rate, expense_id))
+        ''', (date, store, address, search_address, g_lat, g_lon, category, price_f, currency, price_k, rate, expense_id))
         conn.commit()
     
     # 연결 정보 동기화 (None이면 연결 해제됨)
