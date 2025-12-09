@@ -1,0 +1,54 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>1599e125-3db6-4ca3-a7f7-10666ef7ed16</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>test\app\app.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>PythonApplication_jw</Name>
+    <RootNamespace>PythonApplication_jw</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="test\app\app.py" />
+    <Compile Include="test\app\modules\exchange.py" />
+    <Compile Include="test\app\modules\llm_gemini.py" />
+    <Compile Include="test\app\modules\sqlite3_db.py" />
+    <Compile Include="test\app\modules\to_excel.py" />
+    <Compile Include="test\app\modules\to_pdf.py" />
+    <Compile Include="test\app\modules\__init__.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="test\" />
+    <Folder Include="test\app\" />
+    <Folder Include="test\app\fonts\" />
+    <Folder Include="test\app\fonts\NanumGothic\" />
+    <Folder Include="test\app\modules\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="test\app\fonts\NanumGothic\NanumGothic-Bold.ttf" />
+    <Content Include="test\app\fonts\NanumGothic\NanumGothic-ExtraBold.ttf" />
+    <Content Include="test\app\fonts\NanumGothic\NanumGothic-Regular.ttf" />
+    <Content Include="test\app\fonts\NanumGothic\OFL.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>
