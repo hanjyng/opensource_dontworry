@@ -199,7 +199,15 @@ with tab1:
                         st.success("분석 완료! 아래 내용을 확인 후 등록하세요.")
 
         with st.form("expense_form"):
-            input_date = st.date_input("날짜", value=st.session_state.form_date)
+            # 수정 모드인지 확인 (ID가 존재하면 수정 모드)
+            is_edit_mode = st.session_state.expense_edit_id is not None
+            
+            input_date = st.date_input(
+                "날짜", 
+                value=st.session_state.form_date,
+                disabled=is_edit_mode,  # True면 비활성화(수정 불가), False면 활성화
+                help="기존 데이터 수정 시 날짜는 변경할 수 없습니다." if is_edit_mode else None
+            )
             input_store = st.text_input("가게명", value=st.session_state.form_store)
             
             input_address = st.text_input("주소", value=st.session_state.form_address)
@@ -561,7 +569,7 @@ with tab2:
         # 삭제 버튼
         if st.session_state.memory_edit_id:
             if st.button("🗑️ 삭제하기", key="del_mem_btn", type="primary"):
-                 # (기존 삭제 로직 유지)
+                # (기존 삭제 로직 유지)
                 row = memories_df[memories_df['id'] == st.session_state.memory_edit_id].iloc[0]
                 is_linked = True if (row['linked_expense_id'] and row['linked_expense_id'] > 0) else False
                 confirm_delete_dialog("memory", st.session_state.memory_edit_id, is_linked)    
