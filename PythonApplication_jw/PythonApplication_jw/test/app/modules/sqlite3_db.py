@@ -146,7 +146,7 @@ def update_expense(expense_id, date, store, address, search_address, g_lat, g_lo
             gemini_lat=?, gemini_lon=?, category=?, price_foreign=?, 
             currency=?, price_krw=?, exchange_rate=?, linked_memory_id=?
             WHERE id=?
-        ''', (date, store, address, search_address, g_lat, g_lon, category, price_f, currency, price_k, rate, expense_id))
+        ''', (date, store, address, search_address, g_lat, g_lon, category, price_f, currency, price_k, rate, linked_mem_id, expense_id))
         conn.commit()
     
     # 연결 정보 동기화 (None이면 연결 해제됨)
