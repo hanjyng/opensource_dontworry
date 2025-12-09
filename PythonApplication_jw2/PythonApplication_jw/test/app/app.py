@@ -309,12 +309,22 @@ with tab1:
             display_df[['id', '날짜', '가게명', '주소(표시)', '카테고리', '환산금액(KRW)', '연결 추억ID']],
             use_container_width=True, hide_index=True, on_select="rerun", selection_mode="single-row",
             column_config={
+<<<<<<< HEAD
                 "환산금액(KRW)": st.column_config.NumberColumn(
                     "환산금액",
                     format="%d 원",  # 콤마와 '원' 단위 추가
                 ),
                 "날짜": st.column_config.DateColumn("날짜", format="YYYY-MM-DD")
             }
+=======
+        "환산금액(KRW)": st.column_config.NumberColumn(
+            "환산금액",
+            format="%d 원",  # 콤마와 '원' 단위 추가
+        ),
+        "날짜": st.column_config.DateColumn("날짜", format="YYYY-MM-DD")
+    }
+
+>>>>>>> 614a2bf4aa1630a028cded09572cda03eac12856
         )
         
         # 행 클릭 시 수정 모드로 전환
@@ -590,7 +600,11 @@ with tab2:
         # 삭제 버튼
         if st.session_state.memory_edit_id:
             if st.button("🗑️ 삭제하기", key="del_mem_btn", type="primary"):
+<<<<<<< HEAD
                 # (기존 삭제 로직 유지)
+=======
+                 # (기존 삭제 로직 유지)
+>>>>>>> 614a2bf4aa1630a028cded09572cda03eac12856
                 row = memories_df[memories_df['id'] == st.session_state.memory_edit_id].iloc[0]
                 is_linked = True if (row['linked_expense_id'] and row['linked_expense_id'] > 0) else False
                 confirm_delete_dialog("memory", st.session_state.memory_edit_id, is_linked)    
