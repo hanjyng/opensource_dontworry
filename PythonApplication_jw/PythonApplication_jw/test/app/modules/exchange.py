@@ -19,7 +19,8 @@ def get_exchange_rate(target_currency, target_date=None):
             return round(data['Close'].iloc[-1], 4)
         else:
             return None
-    except:
+    except Exception as e:
+        print(f"get_exchange_rate(): {e}")
         return None
 
 
