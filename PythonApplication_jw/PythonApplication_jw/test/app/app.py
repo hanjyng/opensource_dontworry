@@ -244,7 +244,7 @@ with tab1:
             submitted = st.form_submit_button(submit_label)
             
             if submitted:
-                price_krw = input_price * current_rate
+                price_krw = int(round(input_price * current_rate))
                 # 현재 세션 상태의 Gemini 좌표 사용 (수정 시에는 유지 또는 업데이트)
                 g_lat = st.session_state.form_gemini_lat
                 g_lon = st.session_state.form_gemini_lon
@@ -354,7 +354,7 @@ with tab1:
         d_col2.download_button("📊 Excel 다운로드", data=excel_data, file_name="Dont_Worry.xlsx", mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', use_container_width=True)
 
         try:
-            pdf_data = create_pdf(display_df)
+            pdf_data = create_pdf(display_df[['id', '날짜', '가게명', '주소(표시)', '카테고리', '환산금액(KRW)']])
             d_col3.download_button("📕 PDF 다운로드", data=pdf_data, file_name="Dont_Worry.pdf", mime='application/pdf', use_container_width=True)
         except Exception as e:
             d_col3.error(f"PDF 생성 실패: {e}")

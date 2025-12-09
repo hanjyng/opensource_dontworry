@@ -97,6 +97,7 @@ if __name__ == "__main__":
     # 테스트
     t_date = datetime(2023, 9, 25).date() # 과거 날짜 예시
     print(f"Result: {get_exchange_rate('VND', t_date)}")
+
 # import yfinance as yf
 # import streamlit as st
 # from datetime import datetime, timedelta
