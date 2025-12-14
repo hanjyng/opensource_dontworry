@@ -1,4 +1,7 @@
 # opensource_dontworry
+라이선스 요약: [LICENSES.md](THIRD-PARTY-NOTICES.txt)
+고지문 상세:[THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt) 
+
 실행 명령어 
 `streamlit run app.py`
 
