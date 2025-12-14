@@ -1,5 +1,5 @@
 # opensource_dontworry
-라이선스 요약: [LICENSES.md](THIRD-PARTY-NOTICES.txt)
+라이선스 요약: [LICENSES.md](LICENSES.md)
 
 상세 고지문: [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt) 
 
